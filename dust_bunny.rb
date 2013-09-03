@@ -16,7 +16,8 @@ class DustBunny
 	end
 
 	def draw
-		img = @animation[Gosu::milliseconds / 100 % 7];
+		#img = @animation[0]
+		img = @animation[Gosu::milliseconds / 100 % 10];
     	img.draw(@x - img.width / 2.0, @y - img.height / 2.0, 0)
 	end
 	
