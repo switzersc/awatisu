@@ -11,7 +11,7 @@ class MyWindow < Gosu::Window
   def initialize
    super(@@screen_width, @@screen_height, false)
    self.caption = 'AWATISU'
-   @wind_pattern = WindPattern.new
+   @wind_pattern = WindPattern.new(@@screen_width, @@screen_height)
 
    #add some bunnies
    bunny_animation = Gosu::Image::load_tiles(self, "db4-anim.png", 64, 64, false)
