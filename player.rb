@@ -48,7 +48,7 @@ class Player
 	def draw
 		#img = @animation[0]
 		img = @animation[Gosu::milliseconds / 100 % 4];
-    	img.draw(@x - img.width / 2.0, @y - img.height / 2.0, 0)
+    	img.draw(@x - img.width / 2.0, @y - img.height / 2.0, 1)
 	end
 	
 

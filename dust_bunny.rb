@@ -14,9 +14,9 @@ class DustBunny
 		@animation = anim
 		@mass = 10.0
 		@turns_used = 0
-		@max_turns = 200 + rand(40)
+		max_turns
 		@phantom_num_frames = 4
-		@phantom_frames_opacity = [0xaaffffff, 0x88ffffff, 0x44ffffff, 0x22ffffff].reverse!
+		@phantom_frames_opacity = [0x55ffffff, 0x44ffffff, 0x33ffffff, 0x22ffffff].reverse!
 		@phantom_delta = 5
 		@phantom_circle_buffer_size = @phantom_num_frames * @phantom_delta
 		@phantom_circle_buffer = RingBuffer.new(@phantom_circle_buffer_size)
@@ -27,7 +27,9 @@ class DustBunny
 	def y
 		@y
 	end
-
+	def max_turns
+		@max_turns = 10 + rand(30)
+	end
 	def accumulate_force(f)
 		@fx += f[0]
 		@fy += f[1]
@@ -58,7 +60,7 @@ class DustBunny
 			@x = rand(@screen_width)
 			@y = rand(@screen_height)
 			@vel_x = @vel_y = 0
-			@max_turns = 200 + rand(40)
+			max_turns
 			@turns_used = 0
 			@phantom_circle_buffer.clear
 		else
@@ -72,9 +74,9 @@ class DustBunny
 		@phantom_circle_buffer_size.times { |i|
 			if i % @phantom_delta == 0 
 				frame_number = i / @phantom_delta
-				if @phantom_circle_buffer.length > frame_number + 1
+				if @phantom_circle_buffer.length > i + 1
 					phantom_frame_img = @animation[(draw_frame + frame_number) % 10]
-					phantom_coords = @phantom_circle_buffer[frame_number]
+					phantom_coords = @phantom_circle_buffer[i]
 		    		phantom_frame_img.draw(phantom_coords[0] - phantom_frame_img.width / 2.0, phantom_coords[1] - phantom_frame_img.height / 2.0, 0, 1, 1, @phantom_frames_opacity[frame_number])
 		    	end
 			end
@@ -82,7 +84,7 @@ class DustBunny
 
 
 		frame_img = @animation[draw_frame % 10];
-    	frame_img.draw(@x - frame_img.width / 2.0, @y - frame_img.height / 2.0, 0)
+    	frame_img.draw(@x - frame_img.width / 2.0, @y - frame_img.height / 2.0, 0, 1, 1, 0x66ffffff)
 	end
 	
 end
