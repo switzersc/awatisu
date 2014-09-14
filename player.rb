@@ -8,21 +8,38 @@ class Player
 		@y = rand(screen_height)
 		@animation = anim
 		@vel_x = @vel_y = @angle = 0.0
+    @fx = @fy = 0
 		@score = 0
+    @mass = 10.0
 	end
+  def x
+    @x
+  end
+  def y
+    @y
+  end
+  def accumulate_force(f)
+    @fx += f[0]
+    @fy += f[1]
+  end
 
-	def update(wind_pattern)
-		fx, fy = wind_pattern.get(@x, @y)
-		@x += fx/2
-		@y += fy/2
-
+	def update()
+    #F=ma -> a = F/m
+    ax = @fx / @mass
+    ay = @fy / @mass
+    # a = dv/dt -> v = v_old + a
+    @vel_x = @vel_x + ax
+    @vel_y = @vel_y + ay
+    @x += @vel_x
+    @y += @vel_y
+    @fx = @fy = 0
 	end
   
   def move
     @x += @vel_x
     @y += @vel_y
-    @x %= 640
-    @y %= 480
+    @x %= @screen_width
+    @y %= @screen_height
     
     @vel_x *= 0.95
     @vel_y *= 0.95

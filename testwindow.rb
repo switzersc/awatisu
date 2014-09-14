@@ -5,8 +5,8 @@ require_relative 'player'
 
 
 class MyWindow < Gosu::Window
-  @@screen_width = 640
-  @@screen_height = 480
+  @@screen_width = 1024
+  @@screen_height = 780
 
   def initialize
    super(@@screen_width, @@screen_height, false)
@@ -27,8 +27,13 @@ class MyWindow < Gosu::Window
 
   def update
   	@wind_pattern.update
-  	@dust_bunnies.each { |b| b.update @wind_pattern  }
-    @player.update @wind_pattern
+    # have each node 
+    @dust_bunnies.each { |b| b.accumulate_force @wind_pattern.get(b.x, b.y)  }
+    @player.accumulate_force @wind_pattern.get(@player.x, @player.y)
+
+    @dust_bunnies.each { |b| b.update  }
+    @player.update
+
     if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft then
       @player.turn_left
     end

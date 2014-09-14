@@ -32,9 +32,11 @@ class WindPattern
 	end
 
 	def get(x,y)
-		# see wolfram alpha integrate[(x-a)(x-b)(x-c)(x-d), x]
-		fx = @coef*(-1/4*x**4*(@xa+@xb+@xc+@xd)+1/3*x**3*(@xa*(@xb+@xc+@xd)+@xb*(@xc+@xd)+@xc*@xd)-1/2*x**2*(@xa*(@xb*(@xc+@xd)+@xc*@xd)+@xb*@xc*@xd)+@xa*@xb*@xc*@xd*x+x**5/5)
-		fy = @coef*(-1/4*y**4*(@ya+@yb+@yc+@yd)+1/3*y**3*(@ya*(@yb+@yc+@yd)+@yb*(@yc+@yd)+@yc*@yd)-1/2*y**2*(@ya*(@yb*(@yc+@yd)+@yc*@yd)+@yb*@yc*@yd)+@ya*@yb*@yc*@yd*y+y**5/5)
+		# see wolfram alpha integrate[(x-a)(x-b)(x-c)(x-d), x]; or derive the below
+		# a b c d x-1.0/2.0 a b c x^2-1.0/2.0 a b d x^2+1.0/3.0 a b x^3-1.0/2.0 a c d x^2+1.0/3.0 a c x^3+1.0/3.0 a d x^3-(a x^4)/4.0-1.0/2.0 b c d x^2+1.0/3.0 b c x^3+1.0/3.0 b d x^3-(b x^4)/4.0+1.0/3.0 c d x^3-(c x^4)/4.0-(d x^4)/4.0+x^5/5.0
+
+		fx = @coef*(-1.0/4.0*(x**4.0)*(@xa+@xb+@xc+@xd)+1.0/3.0*(x**3.0)*(@xa*(@xb+@xc+@xd)+@xb*(@xc+@xd)+@xc*@xd)-1.0/2.0*(x**2.0)*(@xa*(@xb*(@xc+@xd)+@xc*@xd)+@xb*@xc*@xd)+@xa*@xb*@xc*@xd*x+(x**5.0)/5.0)
+		fy = @coef*(-1.0/4.0*(y**4.0)*(@ya+@yb+@yc+@yd)+1.0/3.0*(y**3.0)*(@ya*(@yb+@yc+@yd)+@yb*(@yc+@yd)+@yc*@yd)-1.0/2.0*(y**2.0)*(@ya*(@yb*(@yc+@yd)+@yc*@yd)+@yb*@yc*@yd)+@ya*@yb*@yc*@yd*y+(y**5.0)/5.0)
 		#normalize so it's not crazy
 		mag_f = Math.hypot(fx, fy)
 		fx = fx / mag_f
